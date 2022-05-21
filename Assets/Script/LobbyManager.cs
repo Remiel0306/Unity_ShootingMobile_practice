@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
+using UnityEngine.Assertions.Must;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -53,6 +54,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int currentCount = PhotonNetwork.CurrentRoom.PlayerCount;
         int maxCount = PhotonNetwork.CurrentRoom.MaxPlayers;
         textCountPlayer.text = "連線人數" + currentCount + "/" + maxCount;
+
+        LoadGameSence(currentCount, maxCount);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -64,6 +67,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int currentCount = PhotonNetwork.CurrentRoom.PlayerCount;
         int maxCount = PhotonNetwork.CurrentRoom.MaxPlayers;
         textCountPlayer.text = "連線人數" + currentCount + "/" + maxCount;
+
+        LoadGameSence(currentCount, maxCount);
+
     }
 
+    private void LoadGameSence(int currentCount, int maxCount)
+    {
+        if(currentCount == maxCount)
+        {
+            PhotonNetwork.LoadLevel("遊戲場景");
+        }
+    }
 }
